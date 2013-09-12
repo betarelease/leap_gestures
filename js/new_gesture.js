@@ -1,5 +1,3 @@
-console.log("show something new_gesture.js");
-
 function moveFinger(Finger, posX, posY, posZ, dirX, dirY, dirZ) {
   Finger.style.webkitTransform = "translateX("+posX+"px) translateY("+posY+"px) translateZ("+posZ+"px) rotateX("+dirX+"deg) rotateY(0deg) rotateZ("+dirZ+"deg)";
 }
@@ -21,14 +19,13 @@ Leap.loop(function(frame) {
 
   for (var handId = 0, handCount = handsLength; handId != handCount; handId++) {
     var hand = frame.hands[handId];
-    var posX = (hand.palmPosition.x*3);
-    var posY = (hand.palmPosition.z*3)-200;
-    var posZ = (hand.palmPosition.y*3)-400;
-    var rotX = (hand.rotation.xBasis.z*90);
-    var rotY = (hand.rotation.xBasis.y*90);
-    var rotZ = (hand.rotation.xBasis.x*90);
+    var posX = (hand.palmPosition[0]*3);
+    var posY = (hand.palmPosition[1]*3)-200;
+    var posZ = (hand.palmPosition[2]*3)-400;
+    var rotX = (hand.rotationAxis(frame)[2]*90);
+    var rotY = (hand.rotationAxis(frame)[1]*90);
+    var rotZ = (hand.rotationAxis(frame)[0]*90);
     var sphere = spheres[hand.id];
-    console.log(hand.rotation.y);
     if (!sphere) {
       var sphereDiv = document.getElementById("sphere").cloneNode(true);
           sphereDiv.setAttribute('id',hand.id);
@@ -53,12 +50,12 @@ Leap.loop(function(frame) {
 
   for (var pointableId = 0, pointableCount = frame.pointables.length; pointableId != pointableCount; pointableId++) {
     var pointable = frame.pointables[pointableId];
-    var posX = (pointable.tipPosition.x*3);
-    var posY = (pointable.tipPosition.z*3)-200;
-    var posZ = (pointable.tipPosition.y*3)-400;
-    var dirX = -(pointable.direction.y*90);
-    var dirY = -(pointable.direction.z*90);
-    var dirZ = (pointable.direction.x*90);
+    var posX = (pointable.tipPosition[0]*3);
+    var posY = (pointable.tipPosition[2]*3)-200;
+    var posZ = (pointable.tipPosition[1]*3)-400;
+    var dirX = -(pointable.direction[1]*90);
+    var dirY = -(pointable.direction[2]*90);
+    var dirZ = (pointable.direction[0]*90);
     var finger = fingers[pointable.id];
     if (!finger) {
       var fingerDiv = document.getElementById("finger").cloneNode(true);
@@ -88,4 +85,3 @@ Leap.loop(function(frame) {
     document.getElementById('app').setAttribute('class','');
   }, false);
 });
-
