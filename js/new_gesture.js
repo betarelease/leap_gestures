@@ -24,7 +24,7 @@ Leap.loop(function(frame) {
     var posZ = (hand.palmPosition[2]*3)-400;
     var rotX = (hand.rotationAxis(frame)[2]*90);
     var rotY = (hand.rotationAxis(frame)[1]*90);
-    var rotZ = (hand.rotationAxis(frame)[0]*90);
+    var rotZ = (hand.rotationAxis(frame)[0]*90);    
     var sphere = spheres[hand.id];
     if (!sphere) {
       var sphereDiv = document.getElementById("sphere").cloneNode(true);
@@ -56,6 +56,8 @@ Leap.loop(function(frame) {
     var dirX = -(pointable.direction[1]*90);
     var dirY = -(pointable.direction[2]*90);
     var dirZ = (pointable.direction[0]*90);
+    
+    var velocity = pointable.tipVelocity;
     var finger = fingers[pointable.id];
     if (!finger) {
       var fingerDiv = document.getElementById("finger").cloneNode(true);
